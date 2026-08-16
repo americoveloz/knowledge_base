@@ -54,7 +54,8 @@ Install-ADDSForest -DomainName "Test.com" -DomainNetbiosName "TEST" -SafeModeAdm
 
 
 
-# Promote to Additional Domain Controller
+# Promote to Additional Domain Controller on existing domain
+Import-Module ADDSDeployment
 Install-ADDSDomainController `
   -DomainName "abc.local" `
   -Credential (Get-Credential) `
@@ -64,6 +65,20 @@ Install-ADDSDomainController `
   -InstallDns:$true `
   -Force:$true
 
+
+# Promotes the server to a new Child Domain Controller
+Import-Module ADDSDeployment
+Install-ADDSDomain `
+  -DomainType "child" `
+  -NewDomainName "branch5" `                     
+  -ParentDomainName "abc.local" `                
+  -Credential (Get-Credential) `                 
+  -CreateDnsDelegation:$true `                   
+  -DatabasePath "C:\Windows\NTDS" `
+  -LogPath "C:\Windows\NTDS" `
+  -SysvolPath "C:\Windows\SYSVOL" `
+  -InstallDns:$true `
+  -Force:$true
 
 
 # Post promotion check
