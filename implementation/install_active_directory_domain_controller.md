@@ -81,7 +81,11 @@ Install-ADDSDomain `
   -Force:$true
 
 
-# Post promotion check
+# Add computer to domain
+Add-Computer -DomainName "your_domain_name" -Restart
+
+
+# Post-promotion check
 
 Get-ADDomain
 
