@@ -14,7 +14,7 @@ net start wuauserv
 ## Downloading and installing updates
 wuauclt /detectnow
 
-#######################################################################################3
+#######################################################################################
 
 # Adding roles and features
 
@@ -26,8 +26,35 @@ Get-WindowsFeature *file* # to search Fileserver role
 
 Install-WindowsFeature -Name AD-Domain-Services, DNS -IncludeManagementTools
 
-#######################################################################################3
+#######################################################################################
 
 # Enable or disable HYPER-V
 bcdedit /set hypervisorlaunchtype [on|off]
 reboot
+
+#######################################################################################
+
+# Enable Remote Administration
+
+## Enabling remote administration. Enabled by default on Windows Server
+Configure-SMRemoting.exe -Enable 
+
+## Enable remote administration with PowerShell
+Enable-PSRemoting -force
+
+## Enable remote administration with winrm
+Winrm quickconfig
+
+
+#######################################################################################
+
+# Configure Windows Firewall
+
+## Filter Firewall rules
+Get-NetFirewallRule *icmp* | Format-table
+
+## Enable or disable firewall rule
+Set-NetFirewallRule -Name "CoreNet-Diag-ICMP4-EchoRequest-In" -Enabled False
+
+## Create new firewall rule
+New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
