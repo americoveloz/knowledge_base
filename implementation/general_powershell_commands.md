@@ -50,6 +50,10 @@ Winrm quickconfig
 
 # Configure Windows Firewall
 
+## Enable or disable Firewall
+
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+
 ## Filter Firewall rules
 Get-NetFirewallRule *icmp* | Format-table
 
