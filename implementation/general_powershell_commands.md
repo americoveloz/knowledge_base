@@ -69,3 +69,5 @@ New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4 -IcmpType 8 
 # GPO provisioning command after IPAM feature has been installed on server
 
 Invoke-IpamGpoProvisioning -Domain "domain.com" -GpoPrefixName "IPAM1" -IpamServerFqdn "ipamserver.domain.com"
+
+Note: after the previous command, execute gpupdate /force on the IPAM server.
